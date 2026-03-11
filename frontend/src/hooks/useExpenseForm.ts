@@ -16,6 +16,7 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
     amount: initialData?.amount || "",
     description: initialData?.description || "",
     category: initialData?.category || "",
+    payer_name: initialData?.payer_name || "",
     date: initialData?.date || formatDate(new Date()),
   });
 
@@ -45,6 +46,10 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
       newErrors.category = "Category is required";
     }
 
+    if (!formData.payer_name) {
+      newErrors.payer_name = "Payer Name is required";
+    }
+
     if (!formData.date) {
       newErrors.date = "Date is required";
     }
@@ -68,6 +73,7 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
         amount: "",
         description: "",
         category: "",
+        payer_name: "",
         date: formatDate(new Date()),
       });
       setErrors({});
@@ -83,6 +89,7 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
       amount: initialData?.amount || "",
       description: initialData?.description || "",
       category: initialData?.category || "",
+      payer_name: initialData?.payer_name || "",
       date: initialData?.date || formatDate(new Date()),
     });
     setErrors({});
