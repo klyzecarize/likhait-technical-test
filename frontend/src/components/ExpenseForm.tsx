@@ -61,7 +61,7 @@ export function ExpenseForm({
       <TextField
         label="Description"
         type="text"
-        placeholder="Enter description"
+        placeholder="Enter Description"
         value={formData.description}
         onChange={(e) => handleChange("description", e.target.value)}
         error={errors.description}
@@ -75,6 +75,17 @@ export function ExpenseForm({
         value={formData.category}
         onChange={(e) => handleChange("category", e.target.value)}
         error={errors.category}
+        fullWidth
+        required
+      />
+
+      <TextField
+        label="Payer Name"
+        type="text"
+        placeholder="Enter Payer Name"
+        value={formData.payer_name}
+        onChange={(e) => handleChange("payer_name", e.target.value)}
+        error={errors.payer_name}
         fullWidth
         required
       />
