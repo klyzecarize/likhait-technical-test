@@ -39,19 +39,24 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
     }
 
     if (!formData.description.trim()) {
-      newErrors.description = "Description is required";
+      newErrors.description = "Description is required.";
     }
 
     if (!formData.category) {
-      newErrors.category = "Category is required";
+      newErrors.category = "Category is required.";
     }
 
     if (!formData.payer_name) {
-      newErrors.payer_name = "Payer Name is required";
+      newErrors.payer_name = "Payer Name is required.";
     }
 
     if (!formData.date) {
-      newErrors.date = "Date is required";
+      newErrors.date = "Date is required.";
+    }
+
+    if (formData.date && formData.date > formatDate(new Date())) {
+     alert(`You can't set future dates because it only log current or past date expenses and not future expenses.`);
+      newErrors.date = `You can only set date today or earlier dates.`
     }
 
     setErrors(newErrors);
