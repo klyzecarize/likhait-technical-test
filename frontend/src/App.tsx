@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import HistoryPage from "./pages/HistoryPage";
+import CategoryPage from "./pages/CategoryPage";
 import { COLORS } from "./constants/colors";
 
 function App() {
@@ -32,7 +33,11 @@ function App() {
         onToggleCollapse={handleToggleSidebar}
       />
       <main style={mainStyle}>
-        {currentPage === "history" && <HistoryPage />}
+        {currentPage === "history" ? (
+          <HistoryPage />
+        ) : (
+          currentPage === "category" && <CategoryPage />
+        )}
       </main>
     </div>
   );

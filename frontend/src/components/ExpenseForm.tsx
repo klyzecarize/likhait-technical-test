@@ -2,12 +2,12 @@
  * Form component for adding/editing expenses
  */
 
-import React, { useState } from "react";
-import { ExpenseFormData } from "../types";
-import { EXPENSE_CATEGORIES } from "../constants/categories";
+import React, { useEffect, useState } from "react";
+import { Category, ExpenseFormData } from "../types";
 import { TextField, SelectBox, Button } from "../vibes";
 import { useExpenseForm } from "../hooks/useExpenseForm";
 import { formatDate } from "../utils/expenseUtils";
+import { getCategories } from "../services/api";
 
 interface ExpenseFormProps {
   initialData?: Partial<ExpenseFormData>;
@@ -22,6 +22,9 @@ export function ExpenseForm({
   onCancel,
   submitLabel = "Add Expense",
 }: ExpenseFormProps) {
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState<Category[]>([]);
+
   const { formData, errors, isSubmitting, handleChange, handleSubmit } =
     useExpenseForm({
       initialData,
@@ -40,12 +43,28 @@ export function ExpenseForm({
     marginTop: "0.5rem",
   };
 
-  const categoryOptions = EXPENSE_CATEGORIES.map((category) => ({
-    value: category,
-    label: category,
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const data = await getCategories();
+      setCategories(data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const categoryOptions = categories.map((category) => ({
+    value: category.name,
+    label: category.name,
   }));
 
-  const [maxDate, setDate] = useState(formatDate(new Date()));
+  const [maxDate] = useState(formatDate(new Date()));
 
   return (
     <form onSubmit={handleSubmit} style={formStyle}>
@@ -76,6 +95,7 @@ export function ExpenseForm({
         label="Category"
         options={categoryOptions}
         value={formData.category}
+        isLoading={loading}
         onChange={(e) => handleChange("category", e.target.value)}
         error={errors.category}
         fullWidth

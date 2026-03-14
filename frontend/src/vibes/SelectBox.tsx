@@ -8,6 +8,7 @@ import { COLORS } from "../constants/colors";
 interface SelectBoxProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string;
   error?: string;
+  isLoading?: boolean;
   fullWidth?: boolean;
   options: Array<{ value: string; label: string }>;
 }
@@ -15,6 +16,7 @@ interface SelectBoxProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 export function SelectBox({
   label,
   error,
+  isLoading = false,
   fullWidth = false,
   options,
   ...props
@@ -54,7 +56,7 @@ export function SelectBox({
     <div style={containerStyle}>
       {label && <label style={labelStyle}>{label}</label>}
       <select style={selectStyle} {...props}>
-        <option value="">Select...</option>
+        <option value="">{isLoading ? "Loading" : "Select"}...</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
