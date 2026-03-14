@@ -2,6 +2,17 @@
  * Type definitions for the Expense Tracking System
  */
 
+export interface Category {
+  id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CategoryFormData {
+  name: string;
+}
+
 export interface Expense {
   id: number;
   amount: number;
